@@ -68,7 +68,7 @@ if (cisst_FOUND)
 			mtsVFDataAbsoluteJointLimits.cdg
 			mtsVFDataRCM.cdg)
 
-  include_directories (${sawConstraintController_INCLUDE_DIR})
+  basis_include_directories (${sawConstraintController_INCLUDE_DIR})
   set (sawConstraintController_HEADER_DIR "${sawConstraintController_SOURCE_DIR}/include/sawConstraintController")
 
   set (HEADER_FILES
@@ -101,13 +101,15 @@ if (cisst_FOUND)
        mtsVF_RCM.cpp
        )
 
-  add_library (sawConstraintController
+  basis_add_library (sawConstraintController
                ${HEADER_FILES}
                ${SOURCE_FILES}
                ${sawConstraintController_CISST_DG_SRCS}
                ${sawConstraintController_CISST_DG_HDRS})
-  cisst_target_link_libraries (sawConstraintController ${REQUIRED_CISST_LIBRARIES})
-  add_dependencies(${TARGET_NAME} sawConstraintController)
+  #cisst_target_link_libraries (sawConstraintController ${REQUIRED_CISST_LIBRARIES})
+  basis_target_link_libraries (sawConstraintController ${REQUIRED_CISST_LIBRARIES})
+  basis_add_dependencies(${TARGET_NAME} sawConstraintController)
+  
   set_property (TARGET sawConstraintController PROPERTY FOLDER "sawConstraintController")
 
   cisst_is_catkin_build (sawConstraintController_IS_CATKIN_BUILT)
@@ -127,13 +129,13 @@ if (cisst_FOUND)
                             COMPONENT sawConstraintController)
 
   # Install targets for headers and library
-  install (DIRECTORY
+  basis_install (DIRECTORY
            "${sawConstraintController_SOURCE_DIR}/include/sawConstraintController"
            "${sawConstraintController_BINARY_DIR}/include/sawConstraintController"
            DESTINATION ${INSTALL_INCLUDE_DIR}
            PATTERN .svn EXCLUDE)
 
-  install (TARGETS sawConstraintController
+  basis_install (TARGETS sawConstraintController
           EXPORT sawConstraintControllerTargets
           RUNTIME DESTINATION ${INSTALL_BIN_DIR}
           LIBRARY DESTINATION ${INSTALL_LIB_DIR}
